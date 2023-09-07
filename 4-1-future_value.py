@@ -2,7 +2,7 @@
 #Bryce Fish
 #Lab 4-1
 
-import validation
+import four_one_validation
 
 def calculate_future_value(monthly_investment, yearly_interest, years):
     # convert yearly values to monthly values
