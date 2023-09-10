@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
+#   Bryce Fish
+#   Lab 7-2
+#   Sep 8th 2023
+
+
 import csv
-FILENAME = "trips.csv"
+FILENAME = "trips2.csv"
 
 def get_miles_driven():
     while (miles_driven := float(input("Enter miles driven:\t"))) <= 0:                    
@@ -11,13 +16,38 @@ def get_gallons_used():
     while (gallons_used := float(input("Enter gallons of gas:\t"))) <= 0:                    
         print("Entry must be greater than zero. Please try again.\n")
     return gallons_used
-        
+
+####   NEW: write_trips read_trips & list_trips ####
+def write_trips(trips):
+    with open(FILENAME, "w", newline="") as file:
+        writer = csv.writer(file)
+        writer.writerows(trips)
+
+def read_trips():
+    trips = []
+    with open(FILENAME, newline="") as file:
+        reader = csv.reader(file)
+        for row in reader:
+            trips.append(row)
+    return trips
+
+def list_trips(trips):
+    print("Distance\t Gallons\t MPG")
+    for i in range(0, len(trips)):
+        trip_item = trips[i]
+        print(f"{trip_item[0]} \t\t{trip_item[1]} \t\t{trip_item[2]}")
+    print()
+
+
 def main():
     # display a welcome message
     print("The Miles Per Gallon program")
     print()
 
-    trips = []
+    #get any previous trips and display them
+    trips = read_trips()
+    list_trips(trips)
+
 
     more = "y"
     while more.lower() == "y":
@@ -27,18 +57,16 @@ def main():
         mpg = round((miles_driven / gallons_used), 2)
         print(f"Miles Per Gallon:\t{mpg}")
         print()
-        
-        #store current trip in trips list
+
+        #add trip to trips object
         current_trip = [miles_driven, gallons_used, mpg]
         trips.append(current_trip)
-
+        #write trips to csv file & then display
+        write_trips(trips)
+        list_trips(trips)
+        
         more = input("More entries? (y or n): ")
-
-    #write to csv
-    with open(FILENAME, "w", newline="") as file:
-        writer = csv.writer(file)
-        writer.writerows(trips)
-
+    
     print("Bye!")
 
 if __name__ == "__main__":
