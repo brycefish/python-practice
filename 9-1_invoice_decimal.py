@@ -31,17 +31,30 @@ while choice == "y":
     discount = order_total * discount_percent
     discount = discount.quantize(Decimal("1.00"), ROUND_HALF_UP)                                
     subtotal = order_total - discount
+    shipping_percent = Decimal(".085")
+    shipping_cost = subtotal * shipping_percent
+    shipping_cost = shipping_cost.quantize(Decimal("1.00"), ROUND_HALF_UP)
     tax_percent = Decimal(".05")
     sales_tax = subtotal * tax_percent
     sales_tax = sales_tax.quantize(Decimal("1.00"), ROUND_HALF_UP)                                 
-    invoice_total = subtotal + sales_tax
+    invoice_total = subtotal + sales_tax + shipping_cost
 
-    # display the results
-    print(f"Order total:        {order_total:10,}")
-    print(f"Discount amount:    {discount:10,}")
-    print(f"Subtotal:           {subtotal:10,}")
-    print(f"Sales tax:          {sales_tax:10,}")
-    print(f"Invoice total:      {invoice_total:10,}")
+    # set locale
+    lc.setlocale(lc.LC_ALL, "en_US")
+    invoice_total = lc.currency(invoice_total, grouping=True)
+    order_total = lc.currency(order_total, grouping=True)
+
+    #f-string alignment
+    spec_left = 20
+    spec_right = "10,"
+    spec_right_currency_string = ">10"
+    
+    print(f"{'Order total:':{spec_left}}{order_total:{spec_right_currency_string}}")
+    print(f"{'Discount amount:':{spec_left}}{discount:{spec_right}}")
+    print(f"{'Subtotal:':{spec_left}}{subtotal:{spec_right}}")
+    print(f"{'Sales tax:':{spec_left}}{sales_tax:{spec_right}}")
+    print(f"{'Shipping cost:':{spec_left}}{shipping_cost:{spec_right}}")
+    print(f"{'Invoice total:':{spec_left}}{invoice_total:{spec_right_currency_string}}")
     print()
 
     choice = input("Continue? (y/n): ")    
