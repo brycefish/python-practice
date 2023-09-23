@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+# Bryce Fish
+# Sep 22
+# Lab 10-2
 
 def get_words_from_file(filename):
     with open(filename) as file:
@@ -26,18 +29,30 @@ def get_unique_words(words):
             unique_words.append(words[i])            
     return unique_words
 
+def get_sentances(filename):
+    with open(filename) as file:
+        text = file.read()
+
+    sentences = text.split(".")
+    return sentences
+
+
 def main():
     filename = "gettysburg_address.txt"
     print("The Word Counter program\n")  
 
-    # get words and unique words
+    # get words and unique words  
     words = get_words_from_file(filename) # get list of words
     unique_words = get_unique_words(words)
 
-    # display number of words and unique words   
+    #get num_sentences
+    sentences = get_sentances(filename)
+
+    # display number of words and unique words (and num_sentences)
+    print(f"Number of sentences = {len(sentences)}")
     print(f"Number of words = {len(words)}")
     print(f"Number of unique words = {len(unique_words)}")
-
+    
     # display unique words and their word counts
     print("Unique word occurrences:")
     for word in unique_words:
