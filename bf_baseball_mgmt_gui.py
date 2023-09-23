@@ -2,12 +2,11 @@
 # Bryce Fish
 # Project 1
 # Server-Side Programming
+# moved project to it's own repo
 
-# display a welcome message
 print("================================================================")
 print("\t\tBaseball Team Manager\n")
-print("This program calculates the batting average for a player based \n on the player\'s official number of at bats and hits.")
-print()
+print("MENU OPTIONS")
 print("1 – Calculate batting average")
 print("2 - Exit program")
 print("================================================================")
